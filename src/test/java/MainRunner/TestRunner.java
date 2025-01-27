@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions(
         features = "src/test/resources/features/AmazonTest.feature",
-        glue = "StepDefinitions",
+        glue = {"StepDefinitions","driverManage"},
         plugin = {
                 "pretty",
                 "html:target/cucumber-report/cucumber-reports.html",

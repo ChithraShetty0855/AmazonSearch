@@ -1,7 +1,9 @@
 Feature: Automate Amazon search functionality
 
+  Background:
+    Given I open Amazon in browser
+
   Scenario: Validate Amazon search suggestions and product details
-    Given I open Amazon in Chrome browser
     When I select "Electronics" from the dropdown and type "IPhone 13"
     Then I should see suggestions related to "IPhone 13"
     When I type "IPhone 13 128 GB" and select the "IPhone 13 128GB" variant from suggestions

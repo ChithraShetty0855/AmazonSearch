@@ -1,10 +1,12 @@
 package PageInteractions;
 import PageObjects.AmazonTestPageObjects;
+import driverManage.driverManager;
 import org.junit.Assert;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,12 +15,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AmazonTestInteractions {
-    public WebDriver driver;
+    WebDriver driver;
     WebDriverWait wait;
     public AmazonTestPageObjects amazonTestFunctionalityPageObjects;
 
     public AmazonTestInteractions(WebDriver driver) {
         this.driver = driver;
+        this.wait=new WebDriverWait(driver,Duration.ofSeconds(5));
         amazonTestFunctionalityPageObjects = new AmazonTestPageObjects(this.driver);
     }
 
@@ -39,7 +42,7 @@ public class AmazonTestInteractions {
         amazonTestFunctionalityPageObjects.searchBox.clear();
         amazonTestFunctionalityPageObjects.searchBox.sendKeys(data);
         String suggestedVarient=variant.toLowerCase();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         amazonTestFunctionalityPageObjects.selectFromSuggestion(suggestedVarient).click();
         amazonTestFunctionalityPageObjects.productResult.click();
     }
@@ -61,7 +64,9 @@ public class AmazonTestInteractions {
     String watchName,watchModel;
 
     public void selectAppleWatch(String variant) {
+        wait.until(ExpectedConditions.elementToBeClickable(amazonTestFunctionalityPageObjects.appleWatchDropdown));
         amazonTestFunctionalityPageObjects.appleWatchDropdown.click();
+        wait.until(ExpectedConditions.elementToBeClickable(amazonTestFunctionalityPageObjects.getAppleWatchType(variant)));
         amazonTestFunctionalityPageObjects.getAppleWatchType(variant).click();
         Pattern pattern = Pattern.compile("\\((.*?)\\)");
         Matcher matcher = pattern.matcher(variant);

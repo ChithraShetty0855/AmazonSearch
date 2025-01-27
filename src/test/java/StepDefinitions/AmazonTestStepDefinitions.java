@@ -1,6 +1,7 @@
 package StepDefinitions;
 
 import PageInteractions.AmazonTestInteractions;
+import driverManage.driverManager;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -10,16 +11,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
+import java.sql.DriverManager;
+
+
 public class AmazonTestStepDefinitions {
     WebDriver driver;
-
     AmazonTestInteractions interactions;
 
-    @Given("I open Amazon in Chrome browser")
-    public void iOpenAmazonInChromeBrowser() {
-        System.setProperty("webdriver.edge.driver", "src/main/resources/drivers/msedgedriver.exe");
-        driver = new EdgeDriver();
-        driver.manage().window().maximize();
+
+    @Given("I open Amazon in browser")
+    public void iOpenAmazonInBrowser() {
+        driver=driverManager.getDriver();
         driver.get("https://www.amazon.in/");
         interactions = new AmazonTestInteractions(driver);
     }
@@ -59,7 +61,6 @@ public class AmazonTestStepDefinitions {
     @Then("the modal should display details of the correct product")
     public void theModalShouldDisplayDetailsOfTheCorrectProduct() {
         interactions.isQuickLookModalDisplayedCorrrectly();
-        driver.quit();
     }
 
 }
